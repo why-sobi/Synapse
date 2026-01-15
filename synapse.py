@@ -14,7 +14,7 @@ For each library: {libraries}
 
 Rules:
 1. For each library provide the following details in format:
-   > Format: Clone URL|Header-only(0/1)|Build Tags (disable tests if possible & build type = {build_type})
+   > Format: Clone URL|Header-only(0/1)|Build Tags (disable tests if possible & build type = {build_type} and static building, if applicable)
    > Example: https://github.com/fmtlib/fmt|0|-DCMAKE_BUILD_TYPE=Release -DBUILD_TESTING=OFF -DBUILD_TESTS=OFF -DBUILD_EXAMPLES=OFF -DBUILD_BENCHMARKS=OFF 
 2. URL can be from github or gitlab. (depeding on where the stable version of the library is hosted)
 3. Separate each library's details with a newline.  
@@ -31,6 +31,8 @@ NOTE: Separate both sections with '---CMAKE---' string.
 4. Use 'file(GLOB_RECURSE SOURCES "src/*.cpp" "src/*.c")' to gather source files. (IMP NOTE: This should always be done before library linking)
 5. Use 'target_include_directories' for header-only (1) libraries pointing to 'external/LibName/include'.
 6. Do NOT use FetchContent or add_subdirectory.
+7. Should be made keeping build flags in mind (like static or not etc ...).
+8. Ensure the CMakeLists.txt is complete and ready to use as PER LIBRARY linking and includes.
 
 Final Output Format:
 URL|0/1|build tags
@@ -60,6 +62,15 @@ root/
    |- Library2
 |- include
 |- src (all .c/.cpp files here should be added to the executable target recursively)
+
+
+------------ SPECIAL LIBRARY INSTRUCTIONS -------------
+1. For SFML 
+    > For find_package use Sentence case for packages name e.g System, Window, Graphics etc iff version 3.x else lowercase.
+    > Static Linking on in Cmake as well.
+    > If version 3.x link target SFML::System ... else sfml-system etc. 
+2. For Boost, only include the necessary components (e.g., filesystem, system etc)
+3. For OpenCV, ensure to link against the opencv_world library.
 -------------------------------------------"""
 
 # %%
@@ -161,3 +172,5 @@ def main():
     
 if __name__ == "__main__":
     main()
+
+# %%
