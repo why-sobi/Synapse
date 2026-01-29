@@ -1,68 +1,128 @@
-# SYNAPSE 
+# Synapse
 
-**The AI-Powered C++ Architect.** Stop fighting `CMakeLists.txt` and manual dependency hell. **Synapse** uses LLMs to intelligently scaffold C++ projects, resolve library dependencies, and configure your build environment in seconds.
+A small CLI script that uses an LLM to scaffold C++ projects so you don’t have to fight CMake every time you start something new.
 
----
-
-## 🧠 Why Synapse?
-
-C++ dependency management is notoriously difficult. Unlike `npm` or `pip`, C++ lacks a single unified repository. **Synapse** solves this by using AI to:
-
-* **Discover:** Automatically find GitHub/GitLab URLs for any library you name.
-* **Configure:** Generate the exact CMake flags needed for both Header-Only and Compiled libraries.
-* **Isolate:** Keep your system clean by managing everything in a local `external/` folder.
-* **Orchestrate:** Build dependencies and link them to your project without manual intervention.
+It’s not a package manager.
+It’s not smart.
+It just saves time.
 
 ---
 
-## 🛠️ Usage
+## What this is
 
-From your terminal, run:
+Synapse automates the annoying part of starting a C++ project:
 
-```bash
-python synapse.py [ProjectName] [Libraries,Separated,By,Commas] [BuildType]
+* Finding the right repo for a library
+* Figuring out if it’s header-only or needs building
+* Writing a usable CMakeLists.txt
+* Setting up a clean folder structure
+* Making sure things actually compile with your compiler
+* Works with commom libraries
 
-```
+It uses an LLM to generate this info, then runs everything locally.
 
-### Example:
+That’s it.
+
+---
+
+## What this is NOT
+
+Let’s be clear:
+
+* Not a replacement for vcpkg or Conan
+* Not deterministic
+* Not production-grade
+* Not magic
+* Not “AI that understands your project”
+
+It’s an automation script that saves you from Googling and copy-pasting CMake snippets for 30 minutes.
+
+---
+
+## Why it exists
+
+Because C++ setup is annoying.
+
+Every time you want to:
+
+* try a new library
+* prototype something small
+* test an idea
+
+you end up:
+
+* reading half-baked README files
+* fighting CMake errors
+* tweaking flags instead of writing code
+
+Synapse just gets you to a compiling project faster.
+
+---
+
+## How it works
+
+1. You give it a project name and some libraries
+2. It asks an LLM for:
+
+   * repo links
+   * whether the library is header-only
+   * common CMake setup
+3. It creates:
+
+   * `src/`
+   * `external/`
+   * `build/`
+   * a CMakeLists.txt
+4. It builds what needs building
+5. You start coding
+
+That’s all.
+
+---
+
+## Example
 
 ```bash
 python synapse.py TestProject spdlog,nlohmann/json,fmt Release
+```
 
+Creates:
+
+```
+TestProject/
+├── src/
+├── external/
+├── build/
+└── CMakeLists.txt
 ```
 
 ---
 
-## 🏗️ What happens "Under the Hood"?
+## Requirements
 
-1. **AI Discovery:** Synapse sends your library list to an LLM to retrieve the best Git URLs and required CMake configuration tags.
-2. **Scaffolding:** Creates a standard directory structure:
-* `src/`: Your source code.
-* `external/`: Cloned dependencies.
-* `build/`: CMake build artifacts.
-
-
-3. **Dependency Build:** For compiled libraries, Synapse runs a local `cmake --build` and `install` step to ensure binaries match your local compiler (MinGW/MSVC).
-4. **Linkage:** Generates a custom `CMakeLists.txt` that correctly handles `target_link_libraries` for compiled libs and `target_include_directories` for header-only libs.
+* Python 3
+* CMake 3.15+
+* GCC / Clang / MSVC
+* An API key (used to query the LLM)
 
 ---
 
-## 📦 Requirements
+## Limitations (read this)
 
-* **Python 3.x**
-* **CMake 3.15+**
-* **A C++ Compiler** (MinGW, MSVC, or Clang)
-* **AI API Key** (Configured in the script)
+* The LLM can hallucinate
+* CMake flags may not always be perfect
+* You may need to tweak things manually
+* No version pinning
+* No dependency resolution
 
----
-
-## ⚠️ Disclaimer
-
-Synapse uses LLMs to generate build configurations. While highly accurate for popular libraries like **Eigen**, **fmt**, and **JSON**, the AI may occasionally "hallucinate" a specific CMake flag. Always verify your `CMakeLists.txt` if a build fails.
+If something breaks, you fix it like you would in a normal C++ project.
 
 ---
 
-### How to set this up as a "Real Tool"
+## Why I made it
 
-1. **Add to PATH:** Add the folder containing `synapse.py` to your System Environment Variables.
-2. **Alias it:** Rename the script or use a wrapper so you can just type `synapse` from any directory.
+I was tired of spending more time setting up projects than writing code.
+This just removes that friction.
+If it saves you time, it did its job.
+
+---
