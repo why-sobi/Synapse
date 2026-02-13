@@ -9,7 +9,8 @@ import sys
 import os
 import glob
 
-load_dotenv()
+script_dir = Path(__file__).parent.resolve()
+load_dotenv(script_dir / ".env")
 
 # %%
 prompt_template = """

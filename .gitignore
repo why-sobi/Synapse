@@ -1,3 +1,5 @@
 venv/
 .env
 *.ipynb
+synapse_cli.egg-info/
+__pycache__/

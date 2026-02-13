@@ -80,10 +80,28 @@ That’s all.
 
 ---
 
+## How to get started
+1. Ensure you have python installed (>=3.8)
+2. Clone the repository
+```bash
+git clone https://github.com/why-sobi/Synapse.git
+cd Synapse
+```
+3. To install the necessary packages and set it up a tool for global use run the following command
+```bash
+pip install -e .
+```
+4. THe tool requires a Google API key for LLM inquiry. You can create one using the following link
+[Get API Key](https://aistudio.google.com/api-keys)
+5. Create an .env file in root with the following content
+```
+GOOGLE_API_KEY=your_api_key_here
+```
+
 ## Example
 
 ```bash
-python synapse.py TestProject spdlog,nlohmann/json,fmt Release
+synapse TestProject spdlog,nlohmann/json,fmt Release
 ```
 
 Creates:
