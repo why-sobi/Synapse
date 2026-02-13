@@ -91,7 +91,7 @@ cd Synapse
 ```bash
 pip install -e .
 ```
-4. THe tool requires a Google API key for LLM inquiry. You can create one using the following link
+4. The tool requires a Google API key for LLM inquiry. You can create one using the following link
 [Get API Key](https://aistudio.google.com/api-keys)
 5. Create an .env file in root with the following content
 ```
