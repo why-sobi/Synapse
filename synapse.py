@@ -72,9 +72,9 @@ root/
 
 ------------ SPECIAL LIBRARY INSTRUCTIONS -------------
 1. For SFML 
-    > For find_package use Sentence case for packages name e.g System, Window, Graphics etc iff version 3.x else lowercase.
-    > Static Linking on in Cmake as well.
-    > If version 3.x link target SFML::System ... else sfml-system etc. 
+    > For find_package use Sentence case for packages name e.g System, Window, Graphics etc insead of system, window etc.
+    > Static Linking on in Cmake as well. (add set(SFML_STATIC_LIBRARIES TRUE) before find_package)
+    > Link target SFML::System ... instead of sfml-system etc. (same for other components)
 2. For Boost, only include the necessary components (e.g., filesystem, system etc)
 3. For OpenCV, ensure to link against the opencv_world library.
 -------------------------------------------"""
@@ -309,7 +309,7 @@ def compile_project(project_name: str, generator: dict, build_type: str = "Relea
 
 def main():
     if len(sys.argv) < 3:
-        print("!!!ERROR!!! \nUsage: python synapse.py <project_name> <library1,library2,...> [build_type]")
+        print("!!!ERROR!!! \nUsage: synapse <project_name> <library1,library2,...> [build_type]")
         return
     project_name = sys.argv[1]
     libraries = sys.argv[2].split(',')
