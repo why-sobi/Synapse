@@ -215,7 +215,10 @@ def setup_project(project_name: str, response: str, generator: dict):
     
     for lib_config in libs_config.strip().split('\n'):
         url, header_only, build_tags = lib_config.split('|')
+        url, header_only, build_tags = url.strip(), header_only.strip(), build_tags.strip()
+        
         print(f"\n[INPUT] URL: {url}, Header-Only: {header_only}, Build Tags: {build_tags}")
+        
         external_dir = root / "external"
         folder_dir = external_dir / Path(url).stem
         
